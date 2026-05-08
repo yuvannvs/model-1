@@ -223,7 +223,9 @@ useEffect(() => {
 
   const unsubscribe = onAuthStateChanged(auth, setUser);
 
-  const handleScroll = () => setIsScrolled(window.scrollY > 50);
+  const handleScroll = () => {
+    setIsScrolled(window.scrollY > 50);
+  };
 
   window.addEventListener('scroll', handleScroll);
 
