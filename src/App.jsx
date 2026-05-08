@@ -208,36 +208,37 @@ export default function App() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [user, setUser] = useState(null);
-  const [bookingStatus, setBookingStatus] = useState('idle'); // idle, loading, success, error
-  const [formData, setFormData] = useState({ name: '', phone: '', service: '', date: '' });
-useEffect(() => {
-  const initAuth = async () => {
-    try {
-      await signInAnonymously(auth);
-    } catch (err) {
-      console.error("Auth error", err);
-    }
-  };
+  const [bookingStatus, setBookingStatus] = useState('idle');
+  const [formData, setFormData] = useState({
+    name: '',
+    phone: '',
+    service: '',
+    date: ''
+  });
 
-  initAuth();
+  useEffect(() => {
+    const initAuth = async () => {
+      try {
+        await signInAnonymously(auth);
+      } catch (err) {
+        console.error("Auth error", err);
+      }
+    };
 
-  const unsubscribe = onAuthStateChanged(auth, setUser);
+    initAuth();
 
-  const handleScroll = () => {
-    setIsScrolled(window.scrollY > 50);
-  };
-
-  window.addEventListener('scroll', handleScroll);
-
-  return () => {
-    unsubscribe();
-    window.removeEventListener('scroll', handleScroll);
-  };
-}, []);
     const unsubscribe = onAuthStateChanged(auth, setUser);
-    const handleScroll = () => setIsScrolled(window.scrollY > 50);
+
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+
     window.addEventListener('scroll', handleScroll);
-    return () => { unsubscribe(); window.removeEventListener('scroll', handleScroll); };
+
+    return () => {
+      unsubscribe();
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, []);
 
   const handleBooking = async (e) => {
