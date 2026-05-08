@@ -210,18 +210,28 @@ export default function App() {
   const [user, setUser] = useState(null);
   const [bookingStatus, setBookingStatus] = useState('idle'); // idle, loading, success, error
   const [formData, setFormData] = useState({ name: '', phone: '', service: '', date: '' });
+useEffect(() => {
+  const initAuth = async () => {
+    try {
+      await signInAnonymously(auth);
+    } catch (err) {
+      console.error("Auth error", err);
+    }
+  };
 
-  useEffect(() => {
-    const initAuth = async () => {
-     const initAuth = async () => {
- const initAuth = async () => {
-  try {
-    await signInAnonymously(auth);
-  } catch (err) {
-    console.error("Auth error", err);
-  }
-};
-   initAuth();
+  initAuth();
+
+  const unsubscribe = onAuthStateChanged(auth, setUser);
+
+  const handleScroll = () => setIsScrolled(window.scrollY > 50);
+
+  window.addEventListener('scroll', handleScroll);
+
+  return () => {
+    unsubscribe();
+    window.removeEventListener('scroll', handleScroll);
+  };
+}, []);
     const unsubscribe = onAuthStateChanged(auth, setUser);
     const handleScroll = () => setIsScrolled(window.scrollY > 50);
     window.addEventListener('scroll', handleScroll);
