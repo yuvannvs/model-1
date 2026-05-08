@@ -20,12 +20,19 @@ import {
 } from 'lucide-react';
 
 // --- Firebase Configuration ---
-const firebaseConfig = JSON.parse(__firebase_config);
+const firebaseConfig = {
+  apiKey: "AIzaSyC6rLwZxTwo51aH4efyQuErWxgwKfB9i5E",
+  authDomain: "model-1-a2e46.firebaseapp.com",
+  projectId: "model-1-a2e46",
+  storageBucket: "model-1-a2e46.firebasestorage.app",
+  messagingSenderId: "306884958401",
+  appId: "1:306884958401:web:207e3aaac3be2c45a81c40",
+  measurementId: "G-TJXCQ7BVKY"
+};
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
-const appId = typeof __app_id !== 'undefined' ? __app_id : 'aurelius-tn-salon';
-
+const appId = 'aurelius-tn-salon';
 const SALON_PHONE = "00000000000";
 
 // --- Frequent "Quick" Services ---
@@ -206,15 +213,15 @@ export default function App() {
 
   useEffect(() => {
     const initAuth = async () => {
-      try {
-        if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-          await signInWithCustomToken(auth, __initial_auth_token);
-        } else {
-          await signInAnonymously(auth);
-        }
-      } catch (err) { console.error("Auth error", err); }
-    };
-    initAuth();
+     const initAuth = async () => {
+ const initAuth = async () => {
+  try {
+    await signInAnonymously(auth);
+  } catch (err) {
+    console.error("Auth error", err);
+  }
+};
+   initAuth();
     const unsubscribe = onAuthStateChanged(auth, setUser);
     const handleScroll = () => setIsScrolled(window.scrollY > 50);
     window.addEventListener('scroll', handleScroll);
